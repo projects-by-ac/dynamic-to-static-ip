@@ -1,0 +1,20 @@
+# Set the default behavior for all files
+* text=auto eol=lf
+
+# Explicitly declare text files you want to always be normalized and converted to LF
+*.c text eol=lf
+*.h text eol=lf
+*.txt text eol=lf
+*.md text eol=lf
+
+# Denote all files that are truly binary and should not be modified
+*.png binary
+*.jpg binary
+*.gif binary
+*.mp3 binary
+*.mp4 binary
+*.avi binary
+*.mov binary
+*.pdf binary
+*.zip binary
+*.exe binary
