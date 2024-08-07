@@ -15,7 +15,6 @@ It provides a comprehensive step-by-step walkthrough, making it user-friendly fo
 #
 ###
 ![static-ip](https://github.com/user-attachments/assets/f8342ae2-d15e-4cdd-9e18-f50f900ac65c)
-#
 ### Usage
 1. **Run the Script**: Execute the script as root on your Ubuntu Server 24.04.
 2. **Follow the Prompts**: The script will guide you through each step, from detecting the current network settings to applying the new static IP configuration.
