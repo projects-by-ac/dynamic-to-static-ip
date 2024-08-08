@@ -125,7 +125,7 @@ gateway=${gateway:-$current_gateway}
 echo ""
 
 # Prompt the user for dhcp4
-read -n 1 -p "Enable DHCP4? (y/n): " dhcp4
+read -p "Enable DHCP4? (y/n): " dhcp4
 case $dhcp4 in
   [Yy]) dhcp4="true";;
   [Nn]) dhcp4="false";;
@@ -134,8 +134,7 @@ esac
 echo ""
 
 # Prompt the user for dhcp6
-echo ""
-read -n 1 -p "Enable DHCP6? (y/n): " dhcp6
+read -p "Enable DHCP6? (y/n): " dhcp6
 case $dhcp6 in
   [Yy]) dhcp6="true";;
   [Nn]) dhcp6="false";;
@@ -144,7 +143,6 @@ esac
 echo ""
 
 # Prompt the user for dns servers
-echo ""
 read -p "Set DNS-Servers (default: 1.1.1.1,8.8.8.8): " dns_servers
 dns_servers=${dns_servers:-"1.1.1.1,8.8.8.8"}
 echo ""
