@@ -134,6 +134,7 @@ esac
 echo ""
 
 # Prompt the user for dhcp6
+echo ""
 read -n 1 -p "Enable DHCP6? (y/n): " dhcp6
 case $dhcp6 in
   [Yy]) dhcp6="true";;
@@ -143,6 +144,7 @@ esac
 echo ""
 
 # Prompt the user for dns servers
+echo ""
 read -p "Set DNS-Servers (default: 1.1.1.1,8.8.8.8): " dns_servers
 dns_servers=${dns_servers:-"1.1.1.1,8.8.8.8"}
 echo ""
