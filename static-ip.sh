@@ -121,7 +121,7 @@ echo "-----------------------------------------------------------------------"
 echo ""
 
 # Prompt the user for the new static IP address
-read -p "Set Static IP address (default: $current_ip): " new_ip
+read -p "Set Static IP address (default: $current_ipv4): " new_ip
 new_ip=${new_ip:-$current_ipv4}
 echo ""
 
