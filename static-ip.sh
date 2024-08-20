@@ -79,11 +79,15 @@ echo ""
 # Find the active network interface
 active_interface=$(ip -o route show to default | awk '{print $5}')
 
+# Find all active network interfaces
+active_interfaces=$(ip link show | awk '/state UP/ {print $2}' | sed 's/://g')
+
 # Get the current IP address, netmask, and gateway
 current_ipv4=$(ip addr show $active_interface | awk '/inet / {print $2}' | cut -d/ -f1)
-current_ipv6=$(ip addr show $active_interface | awk '/inet6 / {print $2 "\n"}' | cut -d/ -f1)
+current_ipv6=$(ip addr show $active_interface | grep "inet6" | grep -v "fe80" | grep -v "fda6" | awk '{print $2}' | cut -d/ -f1)
 current_netmask=$(ip addr show $active_interface | awk '/inet / {print $2}' | cut -d/ -f2)
 current_gateway=$(ip route show default | awk '/default/ {print $3}')
+current_dns=$(resolvectl status | grep "DNS Servers" | awk '{for (i=3; i<=NF; i++) if ($i ~ /^[0-9.]+$/) print $i}' | tr ' ' '\n')
 current_hostname=$(hostname)
 
 # Check if DHCP is enabled for IPv4 from Netplan configuration
@@ -98,6 +102,12 @@ echo ""
 echo -e "${WHITE}Current Hostname:${ENDCOLOR}"
 echo -e "${BGREEN}$current_hostname${ENDCOLOR}"
 echo ""
+echo -e "${WHITE}Active Interface:${ENDCOLOR}"
+echo -e "${BGREEN}$active_interface${ENDCOLOR}"
+echo ""
+echo -e "${WHITE}DHCP4 Enabled:${ENDCOLOR} ${BGREEN}$dhcp4${ENDCOLOR}"
+echo -e "${WHITE}DHCP6 Enabled:${ENDCOLOR} ${BGREEN}$dhcp6${ENDCOLOR}"
+echo ""
 echo -e "${WHITE}Current IPv4 address:${ENDCOLOR}" 
 echo -e "${BGREEN}$current_ipv4${ENDCOLOR}"
 echo ""
@@ -110,8 +120,8 @@ echo ""
 echo -e "${WHITE}Current Gateway:${ENDCOLOR}"
 echo -e "${BGREEN}$current_gateway${ENDCOLOR}"
 echo ""
-echo -e "${WHITE}DHCP4 Enabled:${ENDCOLOR} ${BGREEN}$dhcp4${ENDCOLOR}"
-echo -e "${WHITE}DHCP6 Enabled:${ENDCOLOR} ${BGREEN}$dhcp6${ENDCOLOR}"
+echo -e "${WHITE}Current DNS-Servers:${ENDCOLOR}"
+echo -e "${BGREEN}$current_dns${ENDCOLOR}"
 echo ""
 echo "-----------------------------------------------------------------------"
 echo -e "${BYELLOW}if you press Enter with 'no input' it will default to the current${ENDCOLOR}"
