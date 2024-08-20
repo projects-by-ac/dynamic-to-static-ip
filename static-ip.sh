@@ -80,7 +80,8 @@ echo ""
 active_interface=$(ip -o route show to default | awk '{print $5}')
 
 # Get the current IP address, netmask, and gateway
-current_ip=$(ip addr show $active_interface | awk '/inet / {print $2}' | cut -d/ -f1)
+current_ipv4=$(ip addr show $active_interface | awk '/inet / {print $2}' | cut -d/ -f1)
+current_ipv6=$(ip addr show $active_interface | awk '/inet6 / {print $2 "\n"}' | cut -d/ -f1)
 current_netmask=$(ip addr show $active_interface | awk '/inet / {print $2}' | cut -d/ -f2)
 current_gateway=$(ip route show default | awk '/default/ {print $3}')
 current_hostname=$(hostname)
@@ -94,13 +95,23 @@ dhcp6=$(grep -q "dhcp6: true" /etc/netplan/*.yaml && echo "yes" || echo "no")
 # Show the overview of the current IP address, netmask, and gateway
 echo -e "${BYELLOW}CURRENT (DEFAULT) NETWORK SETTINGS:${ENDCOLOR}"
 echo ""
-echo -e "Current Hostname: ${BGREEN}$current_hostname${ENDCOLOR}"
-echo -e "Current IP address: ${BGREEN}$current_ip${ENDCOLOR}"
-echo -e "Current Netmask: ${BGREEN}255.255.255.0/$current_netmask${ENDCOLOR}"
-echo -e "Current Gateway: ${BGREEN}$current_gateway${ENDCOLOR}"
+echo -e "${WHITE}Current Hostname:${ENDCOLOR}"
+echo -e "${BGREEN}$current_hostname${ENDCOLOR}"
 echo ""
-echo -e "DHCP4 Enabled: ${BGREEN}$dhcp4${ENDCOLOR}"
-echo -e "DHCP6 Enabled: ${BGREEN}$dhcp6${ENDCOLOR}"
+echo -e "${WHITE}Current IPv4 address:${ENDCOLOR}" 
+echo -e "${BGREEN}$current_ipv4${ENDCOLOR}"
+echo ""
+echo -e "${WHITE}Current IPv6 address:${ENDCOLOR}" 
+echo -e "${BGREEN}$current_ipv6${ENDCOLOR}"
+echo ""
+echo -e "${WHITE}Current Netmask:${ENDCOLOR}"
+echo -e "${BGREEN}255.255.255.0/$current_netmask${ENDCOLOR}"
+echo ""
+echo -e "${WHITE}Current Gateway: ${ENDCOLOR}"
+echo -e "${BGREEN}$current_gateway${ENDCOLOR}"
+echo ""
+echo -e "${WHITE}DHCP4 Enabled:${ENDCOLOR} ${BGREEN}$dhcp4${ENDCOLOR}"
+echo -e "${WHITE}DHCP6 Enabled:${ENDCOLOR} ${BGREEN}$dhcp6${ENDCOLOR}"
 echo ""
 echo "-----------------------------------------------------------------------"
 echo -e "${BYELLOW}if you press Enter with 'no input' it will default to the current${ENDCOLOR}"
@@ -111,7 +122,7 @@ echo ""
 
 # Prompt the user for the new static IP address
 read -p "Set Static IP address (default: $current_ip): " new_ip
-new_ip=${new_ip:-$current_ip}
+new_ip=${new_ip:-$current_ipv4}
 echo ""
 
 # Prompt the user for the netmask
