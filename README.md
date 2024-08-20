@@ -14,7 +14,9 @@ It provides a comprehensive step-by-step walkthrough, making it user-friendly fo
 - **Apply Configuration**: Prompts the user to apply the new netplan configuration. If the user chooses not to apply, the script reverts to the original configuration and terminates.
 #
 ###
-![static-ip](https://github.com/user-attachments/assets/f8342ae2-d15e-4cdd-9e18-f50f900ac65c)
+<img width="587" alt="Scherm­afbeelding 2024-08-20 om 21 09 26" src="https://github.com/user-attachments/assets/3f495c6f-d10e-42d1-97f5-ca62f4685bd2">
+
+
 ### Usage
 1. **Run the Script**: Execute the script as root on your Ubuntu Server 24.04.
 2. **Follow the Prompts**: The script will guide you through each step, from detecting the current network settings to applying the new static IP configuration.
